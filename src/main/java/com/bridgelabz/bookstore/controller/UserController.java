@@ -20,7 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 @Slf4j
 @RestController
-@RequestMapping ("/bookStoreApp")
+@RequestMapping ("/bookStoreApp/user")
 public class UserController {
     @Autowired
     IUserService serviceUser;
@@ -67,7 +67,7 @@ return serviceUser.welcomeMsg();
     }
     //Creating Api for retrieve user Record by Token
     @GetMapping("/getRecordByToken")
-    public ResponseEntity<ResponseDTO> getByToken(@RequestParam String token){
+    public ResponseEntity<ResponseDTO> getByToken(@RequestParam(value = "token" ,defaultValue = "") String token){
         UserModel userModel = serviceUser.getByToken(token);
         ResponseDTO responseDTO = new ResponseDTO("fetch user data for particular token",userModel,token);
         ResponseEntity<ResponseDTO> response = new ResponseEntity<>(responseDTO, HttpStatus.OK);
