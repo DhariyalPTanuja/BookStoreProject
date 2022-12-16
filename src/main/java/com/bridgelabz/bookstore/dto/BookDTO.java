@@ -2,8 +2,9 @@ package com.bridgelabz.bookstore.dto;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import lombok.Data;
 
-public class BookDTO {
+public @Data class BookDTO {
     @NotBlank(message = "Book Name not empty")
     public String bookName;
     @NotBlank(message = "author name not empty")

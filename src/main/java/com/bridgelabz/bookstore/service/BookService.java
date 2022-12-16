@@ -1,7 +1,7 @@
 package com.bridgelabz.bookstore.service;
 
 import com.bridgelabz.bookstore.dto.BookDTO;
-import com.bridgelabz.bookstore.exception.BookException;
+import com.bridgelabz.bookstore.exception.BookStoreException;
 import com.bridgelabz.bookstore.model.BookModel;
 import com.bridgelabz.bookstore.repository.BookRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,11 +38,11 @@ public class BookService implements IBookService {
         if (checkId.isPresent())
             return checkId.get();
         else
-            throw new BookException("id is not present");
+            throw new BookStoreException("id is not present");
     }
     //Apply Logic for deleting particular book record which will be delete by id
     @Override
-    public String deleteBook(Long id) throws BookException {
+    public String deleteBook(Long id) throws BookStoreException{
         Optional<BookModel> checkID = repoBook.findById(id);
         if (checkID.isPresent())
             repoBook.deleteById(id);
@@ -60,7 +60,7 @@ public class BookService implements IBookService {
             BookModel updateBookModel = repoBook.save(bookModel);
             return updateBookModel;
         } else
-            throw new BookException("Id is not Found!! update failed");
+            throw new BookStoreException("Id is not Found!! update failed");
     }
     //Apply Logic for searching particular book record which will be found by Book Name
     @Override
@@ -69,7 +69,7 @@ public class BookService implements IBookService {
         if (checkBook != null)
             return checkBook;
         else
-            throw new BookException("Sorry!!! we can not find the book:" + bookName);
+            throw new BookStoreException("Sorry!!! we can not find the book:" + bookName);
     }
     //Apply Logic for updating particular book quantity  by id
     @Override
@@ -84,7 +84,7 @@ public class BookService implements IBookService {
 
         }
         else
-            throw new BookException("Id is not Found!! update failed");
+            throw new BookStoreException("Id is not Found!! update failed");
     }
     //Apply Logic for sorting book record based on price in ascending order
     @Override

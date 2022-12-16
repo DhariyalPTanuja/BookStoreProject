@@ -49,7 +49,7 @@ public class BookController {
         return new ResponseEntity<>("delete the data successfully",HttpStatus.OK);
     }
     //Creating Api for update book record
-    @PostMapping("/update/{id}")
+    @PutMapping("/update/{id}")
     public ResponseEntity<ResponseBookDTO> updateBookRecordById(@Valid @RequestBody BookDTO bookDTO,@PathVariable Long id){
         BookModel bookModel = serviceBook.updateBookRecordById(bookDTO,id);
         ResponseBookDTO responseBookDTO = new ResponseBookDTO("existing book record update successfully",bookModel);
@@ -66,7 +66,7 @@ public class BookController {
         return response;
     }
     //Creating Api for quantity of  book  in Record by book id
-    @PostMapping("/updateQuantity/{id}")
+    @PutMapping("/updateQuantity/{id}")
     public ResponseEntity<ResponseBookDTO> updateBookQuantity(@RequestBody BookDTO bookDTO,@PathVariable Long id,@RequestParam int quantity) {
         BookModel bookModel = serviceBook.updateBookQuantity(bookDTO,id,quantity);
         ResponseBookDTO responseBookDTO = new ResponseBookDTO("existing book quantity update successfully", bookModel);
@@ -85,7 +85,7 @@ public class BookController {
     @GetMapping("/sortingDesc")
     public ResponseEntity<ResponseBookDTO> sortingRecordDesc(){
         List<BookModel> bookModelList = serviceBook.sortingDesc();
-        ResponseBookDTO responseBookDTO = new ResponseBookDTO("Sorting all records in price Ascending order",bookModelList);
+        ResponseBookDTO responseBookDTO = new ResponseBookDTO("Sorting all records in price Descending order",bookModelList);
         ResponseEntity<ResponseBookDTO> response = new ResponseEntity<>(responseBookDTO, HttpStatus.OK);
         return response;
     }

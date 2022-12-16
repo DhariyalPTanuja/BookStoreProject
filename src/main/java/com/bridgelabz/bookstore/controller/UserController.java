@@ -3,7 +3,7 @@ package com.bridgelabz.bookstore.controller;
 import com.bridgelabz.bookstore.dto.LoginDTO;
 import com.bridgelabz.bookstore.dto.ResponseDTO;
 import com.bridgelabz.bookstore.dto.UserDTO;
-import com.bridgelabz.bookstore.exception.UserException;
+import com.bridgelabz.bookstore.exception.BookStoreException;
 import com.bridgelabz.bookstore.model.EmailModel;
 import com.bridgelabz.bookstore.model.UserModel;
 import com.bridgelabz.bookstore.service.EmailService;
@@ -83,7 +83,7 @@ return serviceUser.welcomeMsg();
     }
 
     @PutMapping("/updateBYId/{id}")
-    public ResponseEntity<ResponseDTO>updateUserByID(@Valid @RequestBody UserDTO userDTO, @PathVariable long id) throws UserException {
+    public ResponseEntity<ResponseDTO>updateUserByID(@Valid @RequestBody UserDTO userDTO, @PathVariable long id) throws BookStoreException {
         UserModel userModel = serviceUser.updateUserByID(userDTO,id);
         ResponseDTO responseDto = new ResponseDTO("existing user data update successfully", userModel,null);
         ResponseEntity<ResponseDTO> response = new ResponseEntity<>(responseDto, HttpStatus.OK);

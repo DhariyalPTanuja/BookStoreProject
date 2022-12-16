@@ -2,18 +2,16 @@ package com.bridgelabz.bookstore.service;
 
 import com.bridgelabz.bookstore.dto.LoginDTO;
 import com.bridgelabz.bookstore.dto.UserDTO;
-import com.bridgelabz.bookstore.exception.UserException;
+import com.bridgelabz.bookstore.exception.BookStoreException;
 import com.bridgelabz.bookstore.model.UserModel;
 import com.bridgelabz.bookstore.repository.UserRepository;
 import com.bridgelabz.bookstore.util.TokenUtil;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.catalina.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 import java.util.Optional;
 
 @Service
@@ -52,7 +50,7 @@ public class UserService implements IUserService {
         if (userModelObj.isPresent())
             return userModelObj.get();
         else
-            throw new UserException("Id is not present in database");
+            throw new BookStoreException("Id is not present in database");
     }
 
     @Override
@@ -62,7 +60,7 @@ public class UserService implements IUserService {
         if (userModelObj.isPresent())
             return repoUser.findById(userToken).get();
         else
-            throw new UserException("Token is not match");
+            throw new BookStoreException("Token is not match");
 
     }
 
@@ -70,7 +68,7 @@ public class UserService implements IUserService {
     public UserModel getUserDataByEmail(String email) {
         UserModel userDataList = repoUser.findDataByMail(email);
         if (userDataList != null)
-            throw new UserException("Sorry!!! we can not find the user email:" + email);
+            throw new BookStoreException("Sorry!!! we can not find the user email:" + email);
         else
             return userDataList;
 
@@ -86,7 +84,7 @@ public class UserService implements IUserService {
             UserModel userModelUpdate = repoUser.save(userModel);
             return userModelUpdate;
         } else
-            throw new UserException("Id is not found ,updation fail");
+            throw new BookStoreException("Id is not found ,updation fail");
 
     }
 
@@ -102,7 +100,7 @@ public class UserService implements IUserService {
             UserModel userModelUpdate = repoUser.save(userModel);
             return userModelUpdate;
         } else
-            throw new UserException("email is not found ,updation fail");
+            throw new BookStoreException("email is not found ,updation fail");
     }
 
     //login user
@@ -112,7 +110,7 @@ public class UserService implements IUserService {
         if (checkLoginData != null)
             return "Congratulation !! You have logged in successfully..";
         else
-            throw new UserException("Email or password is incorrect,login fail");
+            throw new BookStoreException("Email or password is incorrect,login fail");
     }
 
     @Override
@@ -131,11 +129,11 @@ public class UserService implements IUserService {
             repoUser.save(user);
             return user;
         } else
-            throw new UserException("Sorry !! we can not find the user email:");
+            throw new BookStoreException("Sorry !! we can not find the user email:");
     }
 
     @Override
-    public String deleteUserData(long id) throws UserException {
+    public String deleteUserData(long id) throws BookStoreException {
         Optional<UserModel> checkID = repoUser.findById(id);
         if (checkID.isPresent())
             repoUser.deleteById(id);
